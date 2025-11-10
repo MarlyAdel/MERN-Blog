@@ -1,0 +1,27 @@
+.category{
+    min-height: calc(100vh - 130px);
+    padding: 20px;
+}
+.category-title{
+    margin-bottom: 15px;
+    color: rgb(6, 95, 34);
+    padding-bottom: 1px;
+    border-bottom: 2px solid rgb(6, 95, 34);
+    font-size: 30px;
+    width: max-content;
+}
+.category-not-found{
+    font-size: 30px;
+    margin: 20px 0;
+    color: var(--dark-color);
+}
+.category-not-found span{
+    color: rgb(20, 105, 85);
+    font-weight: 800;
+    text-transform: capitalize;
+}
+.category-not-found-link{
+    font-size: 21px;
+    text-decoration: underline;
+    font-weight: 500;
+}
