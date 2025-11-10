@@ -39,7 +39,7 @@ app.use(rateLimit({
 
 //~ Cors Policy
 app.use(cors({
-  origin: process.env.CLIENT_DOMAIN,
+  origin: "https://mern-blog-tau-weld.vercel.app",
   credentials: true
 }))
 
