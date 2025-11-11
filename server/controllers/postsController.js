@@ -25,8 +25,7 @@ const createNewPostCtrl = asyncHandler(async (req,res) => {
         return res.status(400).json({message: error.details[0].message})
     }
     //3- Upload photo
-    const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
-    const imgResult =  await cloudinaryUploadImage(imagePath)
+    const uploadedImage = await cloudinaryUploadImage(req.file.path);
     //4- Create new post and save it to DB
     try {
        const post = new Post ({
@@ -35,8 +34,8 @@ const createNewPostCtrl = asyncHandler(async (req,res) => {
         category: req.body.category,
         user: req.user.id,
         image: {
-            url: imgResult.secure_url,
-            publicId: imgResult.public_id,
+            url: uploadedImage.secure_url,
+            publicId: uploadedImage.public_id,
         }
        }) 
        const result = await post.save();
@@ -48,7 +47,7 @@ const createNewPostCtrl = asyncHandler(async (req,res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
         //6- Remove image from the server
-        fs.linkSync(imagePath);
+       // fs.linkSync(imagePath);
 })
 
 
@@ -202,8 +201,8 @@ const updatePostImageCtrl = asyncHandler(async(req,res) => {
     //4- First delete the old image 
     await cloudinaryRemoveImage(post.image.publicId);
     //5- Then upload the new image
-    const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
-    const result = await cloudinaryUploadImage(imagePath);
+    //const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
+    const result = await cloudinaryUploadImage(req.file.path);
 
     //6- Update image field in the DB
     const updatePost = await Post.findByIdAndUpdate(req.params.id , {
@@ -217,7 +216,7 @@ const updatePostImageCtrl = asyncHandler(async(req,res) => {
     //7- Send response to the client
     res.status(200).json(updatePost);
     //8- Remove image from the Server
-    fs.linkSync(imagePath);
+    //fs.linkSync(imagePath);
 })
 
 
