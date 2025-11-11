@@ -15,6 +15,9 @@ const hpp = require("hpp");
 //~ Init App
 const app = express();
 
+//~ Tell Express it's behind a proxy (Vercel)
+app.set("trust proxy", 1);
+
 //~ Connection To Database 
 connectToDB();
 
@@ -35,6 +38,9 @@ app.use(xss());
 app.use(rateLimit({
     windowMs: 10 * 60 * 1000, //10mins
     max: 100,
+    keyGenerator: (req) => req.ip, 
+    standardHeaders: true,
+    legacyHeaders: false
 }));
 
 //~ Cors Policy
