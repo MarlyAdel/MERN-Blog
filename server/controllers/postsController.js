@@ -202,7 +202,7 @@ const updatePostImageCtrl = asyncHandler(async(req,res) => {
     await cloudinaryRemoveImage(post.image.publicId);
     //5- Then upload the new image
     //const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
-    const result = await cloudinaryUploadImage(req.file.path);
+    const result = await cloudinaryUploadImage(req.file.buffer);
 
     //6- Update image field in the DB
     const updatePost = await Post.findByIdAndUpdate(req.params.id , {

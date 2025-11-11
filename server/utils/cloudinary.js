@@ -8,17 +8,21 @@ cloudinary.config({
 })
 
 //* Cloudinary Upload Image
-const cloudinaryUploadImage = async (fileToUpload) => {
-   try {
-    const data = await cloudinary.uploader.upload(fileToUpload, {
-        resource_type: 'auto',
+const cloudinaryUploadImage = async (fileBuffer) => {
+    return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            { resource_type: "auto" },
+            (error, result) => {
+                if (error) {
+                    console.log(error);
+                    reject(new Error("Internal Server Error (cloudinary)"));
+                } else {
+                    resolve(result);
+                }
+            }
+        );
+        stream.end(fileBuffer);
     });
-    return data
-   } 
-   catch (error) {
-    console.log(error)
-    throw new Error("Internal Server Error (cloudinary)");
-   }
 }
 
 
