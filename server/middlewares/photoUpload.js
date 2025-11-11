@@ -16,15 +16,16 @@ const multer = require("multer");
 //         }
 //     }
 // })
+const storage = multer.memoryStorage();
 
 const photoUpload = multer({ 
-    storage:  multer.memoryStorage(),
+    storage,
     fileFilter: function(req,file,cb){ 
         if(file.mimetype.startsWith("image")){
             cb(null , true)
         }
         else{
-            cb({ message: "Unsupported file format" }, false);
+            cb(new Error("Only images are allowed"), false);
         }
     },
     limits: { fileSize: 1024 * 1024 } 

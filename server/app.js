@@ -38,7 +38,7 @@ app.use(xss());
 app.use(rateLimit({
     windowMs: 10 * 60 * 1000, //10mins
     max: 100,
-    keyGenerator: (req) => req.ip, 
+    keyGenerator: ipKeyGenerator,
     standardHeaders: true,
     legacyHeaders: false
 }));
