@@ -25,7 +25,7 @@ const createNewPostCtrl = asyncHandler(async (req,res) => {
         return res.status(400).json({message: error.details[0].message})
     }
     //3- Upload photo
-    const uploadedImage = await cloudinaryUploadImage(req.file.path);
+    const uploadedImage = await cloudinaryUploadImage(req.file.buffer);
     //4- Create new post and save it to DB
     try {
        const post = new Post ({
