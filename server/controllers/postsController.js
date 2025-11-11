@@ -17,7 +17,7 @@ const {Comment} = require("../models/Comment")
 const createNewPostCtrl = asyncHandler(async (req,res) => {
     //1- Validation for image
     if(!req.file){
-        res.status(400).json({message: "No image provided"});
+       return res.status(400).json({message: "No image provided"});
     }
     //2- Validation fror data
     const {error} = validateCreatePost(req.body);
@@ -26,6 +26,7 @@ const createNewPostCtrl = asyncHandler(async (req,res) => {
     }
     //3- Upload photo
     const uploadedImage = await cloudinaryUploadImage(req.file.buffer);
+    console.log(req.file.buffer);
     //4- Create new post and save it to DB
     try {
        const post = new Post ({
