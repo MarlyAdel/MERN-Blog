@@ -16,8 +16,7 @@ const multer = require("multer");
 //         }
 //     }
 // })
-const storage = multer.memoryStorage();
-
+const  storage =  multer.memoryStorage();
 const photoUpload = multer({ 
     storage,
     fileFilter: function(req,file,cb){ 
@@ -25,7 +24,7 @@ const photoUpload = multer({
             cb(null , true)
         }
         else{
-            cb(new Error("Only images are allowed"), false);
+            cb({ message: "Unsupported file format" }, false);
         }
     },
     limits: { fileSize: 1024 * 1024 } 
