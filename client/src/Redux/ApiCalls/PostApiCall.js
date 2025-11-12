@@ -53,7 +53,7 @@ export function createPost (newPost){
         try {
             dispatch(postActions.setLoading());
             console.log("USER FROM REDUX:", getState().auth.user);
-            await request.post(`/api/posts`, newPost, {
+            await post("https://mern-blog-api-delta.vercel.app/api/posts", newPost, {
                 headers: {
                     Authorization : "Bearer " + getState().auth.user.token,
                     "Content-Type" : "multipart/form-data"
