@@ -41,11 +41,7 @@ export default function CreatePost() {
 
     //TODO{Done} .. Send fromData to Server
 
-    if (newPost.get("image").size > 5 * 1024 * 1024) {
-      // 5 ميجا
-      toast.error("The size of the photo is too large") ;
-      return;
-    }
+   
 
     //console.log({ title, category, description, file });
     dispatch(createPost(formData));
