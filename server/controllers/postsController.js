@@ -4,7 +4,8 @@ const {Post, validateCreatePost, validateUpdatePost} = require("../models/Post")
 const path = require("path");
 const fs = require("fs");
 const {cloudinaryUploadImage, cloudinaryRemoveImage} = require("../utils/cloudinary");
-const {Comment} = require("../models/Comment")
+const {Comment} = require("../models/Comment");
+const sharp = require("sharp")
 
 
 //^ Create New Post
@@ -29,7 +30,11 @@ const createNewPostCtrl = asyncHandler(async (req,res) => {
         return res.status(400).json({message: error.details[0].message})
     }
     //3- Upload photo
-    const uploadedImage = await cloudinaryUploadImage(req.file.buffer);
+    const optimizedImage = await sharp(req.file.buffer)
+  .resize({ width: 800 }) 
+  .toBuffer();
+
+const uploadedImage = await cloudinaryUploadImage(optimizedImage);
     console.log("AFTER UPLOAD:", uploadedImage);
     //4- Create new post and save it to DB
     try {
