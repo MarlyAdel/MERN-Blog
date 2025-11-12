@@ -15,6 +15,9 @@ const {Comment} = require("../models/Comment")
  * @access private (only logged in user)
  ---------------------------------------------------------------------------------------------------------------------------------*/
 const createNewPostCtrl = asyncHandler(async (req,res) => {
+  console.log("🟢 REQ.USER:", req.user);
+  console.log("🟢 FILE:", req.file ? "Image received" : "No image");
+  console.log("🟢 BODY:", req.body);
     //1- Validation for image
     if(!req.file){
        return res.status(400).json({message: "No image provided"});
@@ -22,6 +25,7 @@ const createNewPostCtrl = asyncHandler(async (req,res) => {
     //2- Validation fror data
     const {error} = validateCreatePost(req.body);
     if(error){
+        console.log("❌ Validation error:", error.details[0].message);
         return res.status(400).json({message: error.details[0].message})
     }
     //3- Upload photo
