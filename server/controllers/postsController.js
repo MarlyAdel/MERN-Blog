@@ -26,7 +26,7 @@ const createNewPostCtrl = asyncHandler(async (req,res) => {
     }
     //3- Upload photo
     const uploadedImage = await cloudinaryUploadImage(req.file.buffer);
-    console.log(req.file.buffer);
+    console.log("AFTER UPLOAD:", uploadedImage);
     //4- Create new post and save it to DB
     try {
        const post = new Post ({
@@ -39,7 +39,9 @@ const createNewPostCtrl = asyncHandler(async (req,res) => {
             publicId: uploadedImage.public_id,
         }
        }) 
+       console.log("Saving post to DB...");
        const result = await post.save();
+       console.log("Post saved:", result);
         //5- Send response to the client
        res.status(201).json(result)
     } 

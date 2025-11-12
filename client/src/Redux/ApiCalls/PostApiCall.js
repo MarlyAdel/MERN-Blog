@@ -52,6 +52,7 @@ export function createPost (newPost){
     return async (dispatch, getState) => {
         try {
             dispatch(postActions.setLoading());
+            console.log("USER FROM REDUX:", getState().auth.user);
             await request.post(`/api/posts`, newPost, {
                 headers: {
                     Authorization : "Bearer " + getState().auth.user.token,
