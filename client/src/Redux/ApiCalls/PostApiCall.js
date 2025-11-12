@@ -1,3 +1,4 @@
+import axios from "axios";
 import request from "../../Utils/request"
 import { postActions } from "../Slices/PostSlice";
 import { toast } from 'react-toastify';
@@ -53,7 +54,7 @@ export function createPost (newPost){
         try {
             dispatch(postActions.setLoading());
             console.log("USER FROM REDUX:", getState().auth.user);
-            await post("https://mern-blog-api-delta.vercel.app/api/posts", newPost, {
+            await axios.post("https://mern-blog-api-delta.vercel.app/api/posts", newPost, {
                 headers: {
                     Authorization : "Bearer " + getState().auth.user.token,
                     "Content-Type" : "multipart/form-data"
