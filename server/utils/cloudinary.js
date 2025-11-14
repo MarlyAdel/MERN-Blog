@@ -1,5 +1,6 @@
 
 const cloudinary = require("cloudinary");
+const streamifier  = require("streamifier")
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -21,7 +22,7 @@ const cloudinaryUploadImage = async (fileBuffer) => {
                 }
             }
         );
-        stream.end(fileBuffer);
+        streamifier.createReadStream(buffer).pipe(stream);
     });
 }
 
