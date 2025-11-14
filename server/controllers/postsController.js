@@ -16,9 +16,6 @@ const sharp = require("sharp")
  * @access private (only logged in user)
  ---------------------------------------------------------------------------------------------------------------------------------*/
 const createNewPostCtrl = asyncHandler(async (req,res) => {
-  console.log("🟢 REQ.USER:", req.user);
-  console.log("🟢 FILE:", req.file ? "Image received" : "No image");
-  console.log("🟢 BODY:", req.body);
     //1- Validation for image
     if(!req.file){
        return res.status(400).json({message: "No image provided"});
@@ -26,17 +23,15 @@ const createNewPostCtrl = asyncHandler(async (req,res) => {
     //2- Validation fror data
     const {error} = validateCreatePost(req.body);
     if(error){
-        console.log("❌ Validation error:", error.details[0].message);
         return res.status(400).json({message: error.details[0].message})
     }
     //3- Upload photo
     const optimizedImage = await sharp(req.file.buffer)
   .resize({ width: 800 })   
-  .jpeg({ quality: 75 })     
+  .jpeg({ quality: 50 })     
   .toBuffer();
   const uploadedImage = await cloudinaryUploadImage(optimizedImage);
 
-    console.log("AFTER UPLOAD:", uploadedImage);
     //4- Create new post and save it to DB
     try {
        const post = new Post ({
@@ -49,9 +44,7 @@ const createNewPostCtrl = asyncHandler(async (req,res) => {
             publicId: uploadedImage.public_id,
         }
        }) 
-       console.log("Saving post to DB...");
        const result = await post.save();
-       console.log("Post saved:", result);
         //5- Send response to the client
        res.status(201).json(result)
     } 
