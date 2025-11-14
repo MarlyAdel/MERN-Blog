@@ -22,7 +22,7 @@ const cloudinaryUploadImage = async (fileBuffer) => {
                 }
             }
         );
-        streamifier.createReadStream(buffer).pipe(stream);
+        streamifier.createReadStream(fileBuffer).pipe(stream);
     });
 }
 
