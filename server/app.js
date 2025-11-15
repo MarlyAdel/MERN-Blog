@@ -23,7 +23,7 @@ connectToDB();
 
 //~ Middlewares
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+//app.use(express.urlencoded({ extended: false }));
 
 //~ Security Headers (helmet)
 app.use(helmet());
