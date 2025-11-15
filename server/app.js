@@ -45,8 +45,13 @@ app.use(rateLimit({
 //~ Cors Policy
 app.use(cors({
   origin: process.env.CLIENT_DOMAIN,
-  credentials: true
+  credentials: true,
+  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }))
+
+app.options("*", cors()); // OPTIONS requests
+
 
 app.get("/api/test", (req, res) => {
   res.json({ message: "Server is running!" });
