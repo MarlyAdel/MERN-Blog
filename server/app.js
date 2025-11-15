@@ -47,7 +47,8 @@ app.use(cors({
   origin: process.env.CLIENT_DOMAIN,
   credentials: true,
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }))
 
 app.options("*", cors()); // OPTIONS requests
